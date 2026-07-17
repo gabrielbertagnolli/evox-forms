@@ -50,12 +50,8 @@ export const SurveyInactive = async ({
   const description =
     status === "completed" && surveyClosedMessage ? surveyClosedMessage.subheading : descriptions[status];
 
-  const showCTA =
-    status !== "link invalid" &&
-    status !== "link expired" &&
-    status !== "response submitted" &&
-    ((status !== "paused" && status !== "completed") || workspace?.linkSurveyBranding || !workspace) &&
-    !(status === "completed" && surveyClosedMessage);
+  // Evox whitelabel: never show the "create your own Formbricks survey" CTA to respondents.
+  const showCTA = false;
 
   return (
     <div className="flex h-full flex-col items-center justify-between bg-gradient-to-br from-slate-200 to-slate-50 px-4 py-8 text-center">
@@ -69,7 +65,8 @@ export const SurveyInactive = async ({
           </Button>
         )}
       </div>
-      {(!workspace || workspace.linkSurveyBranding) && (
+      {/* Evox whitelabel: brand logo never shown to respondents. */}
+      {Boolean(workspace?.linkSurveyBranding) && (
         <div>
           <Link href="https://formbricks.com">
             <Image src={footerLogo} alt="Brand logo" className="mx-auto w-40" />

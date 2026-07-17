@@ -80,7 +80,8 @@ export const getWorkspaceContextForLinkSurvey = reactCache(
           name: workspace.name,
           styling: workspace.styling,
           logo: workspace.logo,
-          linkSurveyBranding: workspace.linkSurveyBranding,
+          // Evox whitelabel: respondent-facing branding logo always disabled.
+          linkSurveyBranding: false,
           customHeadScripts: workspace.customHeadScripts,
         },
         organizationId: workspace.organizationId,
@@ -128,7 +129,8 @@ export const getWorkspaceById = reactCache(
         },
       });
 
-      return workspacePrisma;
+      // Evox whitelabel: respondent-facing branding logo always disabled.
+      return workspacePrisma && { ...workspacePrisma, linkSurveyBranding: false };
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         logger.error(error, "Error fetching workspace by id");

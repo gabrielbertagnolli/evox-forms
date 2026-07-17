@@ -28,7 +28,8 @@ export const SurveyCompletedMessage = async ({
           {singleUseMessage?.subheading ?? defaultSubheading}
         </p>
       </div>
-      {(!workspace || workspace.linkSurveyBranding) && (
+      {/* Evox whitelabel: brand logo never shown to respondents. */}
+      {Boolean(workspace?.linkSurveyBranding) && (
         <div>
           <Link href="https://formbricks.com">
             <Image src={footerLogo} alt="Brand logo" className="mx-auto w-40" />

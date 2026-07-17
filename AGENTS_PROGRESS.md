@@ -39,7 +39,7 @@ sessions, with no shared memory except this file and the git history. Read
 |---|---|---|---|---|---|
 | 0 | Orientation | DONE | Codex (GPT-5) | 2026-07-17 | Local orientation complete; remote sync explicitly delegated to another agent |
 | 1 | Whitelabel code changes | DONE | claude (chat session, 2026-07-16/17) | 2026-07-17 | Pre-dates this ledger; see §2 entry below for retroactive record |
-| 2 | Build & local verification | NOT_STARTED | — | — | Never actually run — do this before deploying anything |
+| 2 | Build & local verification | IN_PROGRESS | Codex (GPT-5) | 2026-07-17 | Local build and verification in progress |
 | 3 | Coolify deployment artifacts | NOT_STARTED | — | — | |
 | 4 | Data migration rehearsal (sandbox) | NOT_STARTED | — | — | Requires independent review before Lane 5 |
 | 5 | Production deployment (Coolify) | NOT_STARTED | — | — | Requires human sign-off — see PLAN.md hard-stop list |

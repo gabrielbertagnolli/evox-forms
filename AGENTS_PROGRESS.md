@@ -37,7 +37,7 @@ sessions, with no shared memory except this file and the git history. Read
 
 | Lane | Name | Status | Owner | Last updated (UTC) | Notes |
 |---|---|---|---|---|---|
-| 0 | Orientation | IN_PROGRESS | Codex (GPT-5) | 2026-07-17 | Orientation checks in progress |
+| 0 | Orientation | DONE | Codex (GPT-5) | 2026-07-17 | Local orientation complete; remote sync explicitly delegated to another agent |
 | 1 | Whitelabel code changes | DONE | claude (chat session, 2026-07-16/17) | 2026-07-17 | Pre-dates this ledger; see §2 entry below for retroactive record |
 | 2 | Build & local verification | NOT_STARTED | — | — | Never actually run — do this before deploying anything |
 | 3 | Coolify deployment artifacts | NOT_STARTED | — | — | |
@@ -107,3 +107,16 @@ this comment (do not insert above it, keep entries in chronological order):
     reject with reasons>
 - **Status:** <NOT_STARTED | IN_PROGRESS | BLOCKED | IN_REVIEW | DONE>
 -->
+
+### Lane 0 — Orientation — DONE
+
+- **Agent/session:** Codex (GPT-5), local workspace session, 2026-07-17.
+- **What was done:** Read `docs/evox/PLAN.md`, `AGENTS_PROGRESS.md`, and the repository-root `AGENTS.md`; verified the local `evox-whitelabel` history and its tag ancestry.
+- **Commands run and key output:** `git log --oneline -5 evox-whitelabel` showed `d48fba11`, `3b27794c`, `1f5368ec`, and `043e95f6`; `git merge-base --is-ancestor 5.1.4 evox-whitelabel` exited 0.
+- **Commits:** `d48fba11` — claim Lane 0; this commit closes the lane locally.
+- **Deviations from PLAN.md, if any:** Did not run `git fetch --all --tags` and did not push the claim commit. The operator explicitly directed this agent to work only with existing local files; remote synchronization is delegated to another agent.
+- **Blockers (if status is BLOCKED):** N/A.
+- **Review Gate:** Self-review passed: local history is consistent with the documented whitelabel commits and tag `5.1.4` is an ancestor of `evox-whitelabel`.
+  - **Reviewer (independent-review lanes only):** N/A.
+  - **Reviewer's findings:** N/A.
+- **Status:** DONE.

@@ -39,7 +39,7 @@ sessions, with no shared memory except this file and the git history. Read
 |---|---|---|---|---|---|
 | 0 | Orientation | DONE | Codex (GPT-5) | 2026-07-17 | Local orientation complete; remote sync explicitly delegated to another agent |
 | 1 | Whitelabel code changes | DONE | claude (chat session, 2026-07-16/17) | 2026-07-17 | Pre-dates this ledger; see §2 entry below for retroactive record |
-| 2 | Build & local verification | IN_PROGRESS | Codex (GPT-5) | 2026-07-17 | Dependency installation and remaining local verification in progress |
+| 2 | Build & local verification | BLOCKED | Codex (GPT-5) | 2026-07-17 | pnpm installation incomplete; Docker Desktop unavailable; tests and build cannot run |
 | 3 | Coolify deployment artifacts | NOT_STARTED | — | — | |
 | 4 | Data migration rehearsal (sandbox) | NOT_STARTED | — | — | Requires independent review before Lane 5 |
 | 5 | Production deployment (Coolify) | NOT_STARTED | — | — | Requires human sign-off — see PLAN.md hard-stop list |
@@ -129,6 +129,18 @@ this comment (do not insert above it, keep entries in chronological order):
 - **Deviations from PLAN.md, if any:** Did not run `pnpm install`, `pnpm db:up`, package rebuild, full tests, full build, browser checks, or `pnpm db:down`. The operator explicitly restricted this agent to existing local files; `node_modules` is absent, and dependency installation would download external packages.
 - **Blockers (if status is BLOCKED):** Provide an existing local dependency store/node_modules, or explicitly authorize `pnpm install` (including any required package-registry access). Then rerun the remaining Lane 2 checks in full.
 - **Review Gate:** PENDING — tests, build, and manual browser checks cannot be attested until the blocker is resolved.
+  - **Reviewer (independent-review lanes only):** N/A.
+  - **Reviewer's findings:** N/A.
+- **Status:** BLOCKED.
+### Lane 2 — Build & local verification — BLOCKED (follow-up)
+
+- **Agent/session:** Codex (GPT-5), local workspace session, 2026-07-17.
+- **What was done:** Retried dependency setup after authorization. Created a local, gitignored `.env` from `.env.example` with generated development-only secrets. Restored the tracked Windows checkout representation of `apps/web/.env` to its original `../../.env` link text afterward, so no secret is left in a tracked file.
+- **Commands run and key output:** `pnpm install` timed out after 961 seconds with no output. `pnpm install --ignore-scripts --reporter=append-only` also timed out after 64 seconds with no output. Direct Vitest execution failed with `ERR_MODULE_NOT_FOUND: Cannot find package '@vitest/utils'`, proving the install is incomplete. `pnpm db:up` reached Docker but failed because `//./pipe/dockerDesktopLinuxEngine` was unavailable (Docker Desktop is not running). The package test script also resolved an external Python `dotenv.exe` rather than a local project binary because the pnpm install had not created the local bin links.
+- **Commits:** This commit — Lane 2 blocker follow-up only. Test assertion fixes remain in `33033ff4`.
+- **Deviations from PLAN.md, if any:** No full test, build, container, or browser verification could run because the dependency installation did not finish and Docker Desktop is unavailable.
+- **Blockers (if status is BLOCKED):** Resolve the local pnpm installation hang (or provide a complete `node_modules`/pnpm store) and start Docker Desktop. Then rerun `pnpm db:up`, the tests, build, browser checks, and `pnpm db:down` before closing Lane 2.
+- **Review Gate:** PENDING — the required test/build/browser checks remain unrun.
   - **Reviewer (independent-review lanes only):** N/A.
   - **Reviewer's findings:** N/A.
 - **Status:** BLOCKED.

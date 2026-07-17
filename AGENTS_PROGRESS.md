@@ -37,7 +37,7 @@ sessions, with no shared memory except this file and the git history. Read
 
 | Lane | Name | Status | Owner | Last updated (UTC) | Notes |
 |---|---|---|---|---|---|
-| 0 | Orientation | NOT_STARTED | — | — | |
+| 0 | Orientation | IN_PROGRESS | Codex (GPT-5) | 2026-07-17 | Orientation checks in progress |
 | 1 | Whitelabel code changes | DONE | claude (chat session, 2026-07-16/17) | 2026-07-17 | Pre-dates this ledger; see §2 entry below for retroactive record |
 | 2 | Build & local verification | NOT_STARTED | — | — | Never actually run — do this before deploying anything |
 | 3 | Coolify deployment artifacts | NOT_STARTED | — | — | |

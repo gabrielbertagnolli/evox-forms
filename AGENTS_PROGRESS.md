@@ -39,7 +39,7 @@ sessions, with no shared memory except this file and the git history. Read
 |---|---|---|---|---|---|
 | 0 | Orientation | DONE | Codex (GPT-5) | 2026-07-17 | Local orientation complete; remote sync explicitly delegated to another agent |
 | 1 | Whitelabel code changes | DONE | claude (chat session, 2026-07-16/17) | 2026-07-17 | Pre-dates this ledger; see §2 entry below for retroactive record |
-| 2 | Build & local verification | IN_PROGRESS | Codex (GPT-5) | 2026-07-17 | Local build and verification in progress |
+| 2 | Build & local verification | BLOCKED | Codex (GPT-5) | 2026-07-17 | Test fixes ready; node_modules absent and local-only instruction prevents pnpm install |
 | 3 | Coolify deployment artifacts | NOT_STARTED | — | — | |
 | 4 | Data migration rehearsal (sandbox) | NOT_STARTED | — | — | Requires independent review before Lane 5 |
 | 5 | Production deployment (Coolify) | NOT_STARTED | — | — | Requires human sign-off — see PLAN.md hard-stop list |
@@ -120,3 +120,15 @@ this comment (do not insert above it, keep entries in chronological order):
   - **Reviewer (independent-review lanes only):** N/A.
   - **Reviewer's findings:** N/A.
 - **Status:** DONE.
+### Lane 2 — Build & local verification — BLOCKED
+
+- **Agent/session:** Codex (GPT-5), local workspace session, 2026-07-17.
+- **What was done:** Updated the two `workspace.test.ts` expectations required by the plan so that test fixtures may retain `linkSurveyBranding: true` while the expected loader output is `false`. Confirmed with `git diff --check` that the source diff contains only those two assertions.
+- **Commands run and key output:** `Test-Path node_modules` and `Test-Path apps/web/node_modules` both returned `False`. `pnpm test --filter=@formbricks/web -- apps/web/modules/survey/link/lib/workspace.test.ts` was started but produced no result and was terminated after approximately 30 seconds to avoid leaving a blocked process. No test, build, Docker, or browser verification was completed.
+- **Commits:** This commit — test-expectation fixes plus Lane 2 status/log update.
+- **Deviations from PLAN.md, if any:** Did not run `pnpm install`, `pnpm db:up`, package rebuild, full tests, full build, browser checks, or `pnpm db:down`. The operator explicitly restricted this agent to existing local files; `node_modules` is absent, and dependency installation would download external packages.
+- **Blockers (if status is BLOCKED):** Provide an existing local dependency store/node_modules, or explicitly authorize `pnpm install` (including any required package-registry access). Then rerun the remaining Lane 2 checks in full.
+- **Review Gate:** PENDING — tests, build, and manual browser checks cannot be attested until the blocker is resolved.
+  - **Reviewer (independent-review lanes only):** N/A.
+  - **Reviewer's findings:** N/A.
+- **Status:** BLOCKED.

@@ -60,7 +60,7 @@ describe("getWorkspaceById", () => {
 
     const result = await getWorkspaceById(workspaceId);
 
-    expect(result).toEqual(mockWorkspace);
+    expect(result).toEqual({ ...mockWorkspace, linkSurveyBranding: false });
     expect(prisma.workspace.findUnique).toHaveBeenCalledWith({
       where: {
         id: workspaceId,
@@ -149,7 +149,7 @@ describe("getWorkspaceContextForLinkSurvey", () => {
         name: "Test Workspace",
         styling: { primaryColor: "#000000" },
         logo: { url: "https://example.com/logo.png" },
-        linkSurveyBranding: true,
+        linkSurveyBranding: false,
         customHeadScripts: null,
       },
       organizationId: "clh1a2b3c4d5e6f7g8h9k",

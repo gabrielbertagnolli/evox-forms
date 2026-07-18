@@ -112,7 +112,7 @@ afterEach(() => {
   rmSync("/tmp/formbricks-policy.json", { force: true });
 });
 
-describe("docker/formbricks.sh RustFS bootstrap", () => {
+describe.skipIf(process.platform === "win32")("docker/formbricks.sh RustFS bootstrap", () => {
   test("generated init script stays in sync with the checked-in dev bootstrap script", () => {
     const tempDir = createTempDir();
     const generatedScriptPath = join(tempDir, "rustfs-init.sh");

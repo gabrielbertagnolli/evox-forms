@@ -37,6 +37,11 @@ yarn-error.log*
 !packages/database/.env
 !apps/web/.env
 
+# Evox: sandbox/rehearsal env files may contain real production secrets
+# copied from operator backups — never track these.
+docs/evox/*.env*
+!docs/evox/env.template
+
 # build tools
 .turbo
 **/*vite.config.*.timestamp-*

@@ -1,0 +1,64 @@
+services:
+  formbricks-postgres:
+    image: pgvector/pgvector:pg15
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - formbricks_pg:/var/lib/postgresql/data
+
+  formbricks-redis:
+    image: redis:alpine
+    restart: always
+
+  formbricks-minio:
+    image: minio/minio:latest
+    restart: always
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${S3_ACCESS_KEY}
+      MINIO_ROOT_PASSWORD: ${S3_SECRET_KEY}
+    volumes:
+      - formbricks_minio_data:/data
+
+  formbricks:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    restart: always
+    depends_on:
+      - formbricks-postgres
+      - formbricks-redis
+      - formbricks-minio
+    volumes:
+      - formbricks_uploads:/uploads
+    environment:
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY}
+      - CRON_SECRET=${CRON_SECRET}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - S3_ACCESS_KEY=${S3_ACCESS_KEY}
+      - S3_SECRET_KEY=${S3_SECRET_KEY}
+      - S3_BUCKET_NAME=${S3_BUCKET_NAME}
+      - S3_REGION=${S3_REGION}
+      - S3_FORCE_PATH_STYLE=${S3_FORCE_PATH_STYLE}
+      - S3_PUBLIC_URL=${S3_PUBLIC_URL}
+      - NEXTAUTH_URL=${NEXTAUTH_URL}
+      - WEBAPP_URL=${WEBAPP_URL}
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@formbricks-postgres:5432/${POSTGRES_DB}
+      - REDIS_URL=redis://formbricks-redis:6379
+      - STORAGE_TYPE=s3
+      - S3_ENDPOINT=http://formbricks-minio:9000
+    # Note: Traefik labels are removed; Domain/TLS binding is managed in the Coolify UI.
+
+volumes:
+  formbricks_pg:
+    external: true
+  formbricks_uploads:
+    external: true
+  formbricks_minio_data:
+    external: true

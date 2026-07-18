@@ -40,7 +40,7 @@ sessions, with no shared memory except this file and the git history. Read
 | 0 | Orientation | DONE | Codex (GPT-5) | 2026-07-17 | Local orientation complete; remote sync explicitly delegated to another agent |
 | 1 | Whitelabel code changes | DONE | claude (chat session, 2026-07-16/17) | 2026-07-17 | Pre-dates this ledger; see §2 entry below for retroactive record |
 | 2 | Build & local verification | BLOCKED | Codex (GPT-5) | 2026-07-17 | pnpm installation incomplete; Docker Desktop unavailable; tests and build cannot run |
-| 3 | Coolify deployment artifacts | NOT_STARTED | — | — | |
+| 3 | Coolify deployment artifacts | DONE | Antigravity | 2026-07-17 | Artifacts created per PLAN.md |
 | 4 | Data migration rehearsal (sandbox) | NOT_STARTED | — | — | Requires independent review before Lane 5 |
 | 5 | Production deployment (Coolify) | NOT_STARTED | — | — | Requires human sign-off — see PLAN.md hard-stop list |
 | 6 | Post-deploy verification & sign-off | NOT_STARTED | — | — | Requires independent review |
@@ -144,3 +144,16 @@ this comment (do not insert above it, keep entries in chronological order):
   - **Reviewer (independent-review lanes only):** N/A.
   - **Reviewer's findings:** N/A.
 - **Status:** BLOCKED.
+
+### Lane 3 — Coolify deployment artifacts — DONE
+
+- **Agent/session:** Antigravity (Gemini), local workspace session, 2026-07-17.
+- **What was done:** Created `docker-compose.coolify.yml`, `env.template`, and `DEPLOY.md` inside `docs/evox/` according to Lane 3 requirements.
+- **Commands run and key output:** Used `write_to_file` to create the configuration and documentation files.
+- **Commits:** none yet.
+- **Deviations from PLAN.md, if any:** None.
+- **Blockers (if status is BLOCKED):** N/A.
+- **Review Gate:** Self-review passed: `docker-compose.coolify.yml` contains zero literal secrets, `env.template` documents required vars, and `DEPLOY.md` steps are concrete.
+  - **Reviewer (independent-review lanes only):** N/A.
+  - **Reviewer's findings:** N/A.
+- **Status:** DONE.

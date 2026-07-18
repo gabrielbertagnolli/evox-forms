@@ -53,6 +53,18 @@ services:
       - REDIS_URL=redis://formbricks-redis:6379
       - STORAGE_TYPE=s3
       - S3_ENDPOINT=http://formbricks-minio:9000
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - SMTP_SECURE_ENABLED=${SMTP_SECURE_ENABLED}
+      - MAIL_FROM=${MAIL_FROM}
+      - NODE_TLS_REJECT_UNAUTHORIZED=${NODE_TLS_REJECT_UNAUTHORIZED}
+      - NEXT_IMAGE_EXPORT_LOADER=${NEXT_IMAGE_EXPORT_LOADER}
+      - CUBEJS_API_SECRET=${CUBEJS_API_SECRET}
+      - CUBEJS_API_URL=${CUBEJS_API_URL}
+      - HUB_API_URL=${HUB_API_URL}
+      - HUB_API_KEY=${HUB_API_KEY}
     # Note: Traefik labels are removed; Domain/TLS binding is managed in the Coolify UI.
 
 volumes:

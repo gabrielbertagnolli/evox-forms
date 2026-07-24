@@ -5,7 +5,6 @@ import { TSurveyStyling } from "@formbricks/types/surveys/types";
 import { TWorkspaceStyling } from "@formbricks/types/workspace";
 import { cn } from "@/lib/cn";
 import { LegalFooter } from "@/modules/survey/link/components/legal-footer";
-import { SurveyLoadingAnimation } from "@/modules/survey/link/components/survey-loading-animation";
 import { ClientLogo } from "@/modules/ui/components/client-logo";
 import { MediaBackground } from "@/modules/ui/components/media-background";
 import { ResetProgressButton } from "@/modules/ui/components/reset-progress-button";
@@ -67,21 +66,12 @@ export const LinkSurveyWrapper = ({
           styling.cardArrangement?.linkSurveys === "straight" && "pt-6",
           styling.cardArrangement?.linkSurveys === "casual" && "px-6 py-10"
         )}>
-        <SurveyLoadingAnimation
-          isWelcomeCardEnabled={isWelcomeCardEnabled}
-          isBrandingEnabled={isBrandingEnabled}
-        />
         {children}
       </div>
     );
   else
     return (
       <div>
-        <SurveyLoadingAnimation
-          isWelcomeCardEnabled={isWelcomeCardEnabled}
-          isBackgroundLoaded={isBackgroundLoaded}
-          isBrandingEnabled={isBrandingEnabled}
-        />
         <MediaBackground
           surveyType={surveyType}
           styling={styling}

@@ -1,4 +1,4 @@
-import { type JSX, useState } from "react";
+import { type JSX } from "react";
 import { useTranslation } from "react-i18next";
 import { SurveyType, Workspace } from "@formbricks/database/prisma-browser";
 import { TSurveyStyling } from "@formbricks/types/surveys/types";
@@ -33,7 +33,6 @@ export const LinkSurveyWrapper = ({
   children,
   workspace,
   workspaceId,
-  isWelcomeCardEnabled,
   surveyType,
   surveyId,
   isPreview,
@@ -45,18 +44,9 @@ export const LinkSurveyWrapper = ({
   TERMS_URL,
   IS_FORMBRICKS_CLOUD,
   publicDomain,
-  isBrandingEnabled,
   dir = "auto",
 }: LinkSurveyWrapperProps) => {
   const { t } = useTranslation();
-  //for embedded survey strip away all surrounding css
-  const [isBackgroundLoaded, setIsBackgroundLoaded] = useState(false);
-
-  const handleBackgroundLoaded = (isLoaded: boolean) => {
-    if (isLoaded) {
-      setIsBackgroundLoaded(true);
-    }
-  };
   const styling = determineStyling();
   if (isEmbed)
     return (
@@ -72,10 +62,7 @@ export const LinkSurveyWrapper = ({
   else
     return (
       <div>
-        <MediaBackground
-          surveyType={surveyType}
-          styling={styling}
-          onBackgroundLoaded={handleBackgroundLoaded}>
+        <MediaBackground surveyType={surveyType} styling={styling}>
           <div className="flex max-h-dvh min-h-dvh items-center justify-center overflow-clip">
             {!styling.isLogoHidden && (workspace.logo?.url || styling.logo?.url) && (
               <ClientLogo
